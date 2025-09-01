@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KitabyHadith</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #0d9488;
+            --secondary: #00544d;
+            --accent: #f59e0b;
+            --light: #f0fdfa;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aac1f8c1-f596-4fa1-9b27-3e9b9e9fa8c7.png') fixed;
+            background-size: cover;
+            background-color: rgba(240, 253, 250, 0.95);
+            background-blend-mode: lighten;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .islamic-pattern {
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/60a75690-0f70-4596-9f51-099b40022a4a.png') center repeat;
+            background-size: 300px;
+            background-color: var(--primary);
+            background-blend-mode: overlay;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+        
+        .calligraphy-title {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .arabic-font {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 1.4rem;
+            line-height: 2.3;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .teacher-card:hover .teacher-img {
+            transform: scale(1.05);
+        }
+
+        /* Smooth scrolling for navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Search results styling */
+        .search-highlight {
+            background-color: rgba(245, 158, 11, 0.2);
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layer -->
+    <div class="islamic-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav class="bg-white bg-opacity-90 backdrop-blur-sm shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Logo and site name -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16"></div>
+                        <span class="calligraphy-title ml-3 text-2xl text-gray-800">KitayHadith</span>
+                    </div>
+                    
+                    <!-- Navigation links - UPDATED WITH #BOOKS LINK -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="#" class="inline-flex items-center px-1 pt-1 border-b-2 border-teal-500 text-sm font-medium text-gray-900">Home</a>
+                        <a href="#Books" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium text-gray-500 hover:text-gray-700">Books</a>
+                        <a href="#about" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium text-gray-500 hover:text-gray-700">About</a>
+                    </div>
+                </div>
+                
+                <!-- Search and Action -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="relative flex items-center">
+                            <input type="text" id="search-input" placeholder="Search knowledge..." class="pl-3 pr-10 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                            <button id="search-button" class="absolute right-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="ml-4 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- No results message -->
+    <div id="no-results" class="no-results max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <h3 class="text-xl font-semibold text-gray-700">No results found</h3>
+        <p class="text-gray-500 mt-2">Try different or more general keywords</p>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="relative py-20 md:py-32 text-center">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white bg-opacity-80 rounded-xl p-8 md:p-12 max-w-3xl mx-auto shadow-xl">
+                <h1 class="calligraphy-title text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+                    Seek Knowledge From the Cradle to the Grave
+                </h1>
+                <p class="arabic-font text-xl text-gray-700 mb-10 max-w-2xl mx-auto">
+                    وقال رسول الله صلى الله عليه وسلم: "طلب العلم فريضة على كل مسلم"
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Book Section - ADDED ID="BOOKS" HERE -->
+    <section id="Books" class="py-20 bg-gradient-to-b from-teal-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="calligraphy-title text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Islamic Education
+                </h2>
+                <p class="max-w-2xl mx-auto text-gray-600">
+                    Structured Islamic curriculum for all knowledge seekers
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="resources-container">
+                <!-- Quranic Studies - UPDATED WITH QURAN 16 LINE -->
+                <div class="resource-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-teal-100 flex items-center justify-center">
+                        <img src="images/1.jpg" alt="Open Quran book with decorative illumination patterns" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Quranic Studies</h3>
+                        <p class="text-gray-600 mb-4">
+                            Tajweed, Memorization, Tafsir, and Quran Arabic programs
+                        </p>
+                        
+                        <!-- List of Quranic Resources -->
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Quran 16 Line</span>
+                                <a href="quran-16-line.html" class="text-teal-600 hover:text-teal-800 text-sm">Read</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Tajweed Rules</span>
+                                <a href="tajweed.html" class="text-teal-600 hover:text-teal-800 text-sm">Coming Soon</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Quran Tafsir</span>
+                                <a href="tafsir.html" class="text-teal-600 hover:text-teal-800 text-sm">Coming Soon</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-gray-700">Memorization Guide</span>
+                                <a href="hifz-guide.html" class="text-teal-600 hover:text-teal-800 text-sm">Coming Soon</a>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-teal-600 font-medium">4 Resources</span>
+                            <a href="quran-studies.html" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+                                View All
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hadith Books -->
+                <div class="resource-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-amber-100 flex items-center justify-center">
+                        <img src="images/2.jpg" alt="Collection of Hadith books" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Hadith Books</h3>
+                        <p class="text-gray-600 mb-4">
+                            Explore authentic collections of Prophet Muhammad's (PBUH) sayings and teachings
+                        </p>
+                        
+                        <!-- List of Hadith Books -->
+                        <div class="mb-4">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Sahih al-Bukhari</span>
+                                <a href="sahih-bukhari.html" class="text-teal-600 hover:text-teal-800 text-sm">Read</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Sahih Muslim</span>
+                                <a href="sahih-muslim.html" class="text-teal-600 hover:text-teal-800 text-sm">Read</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-700">Sunan Abu Dawood</span>
+                                <a href="abudawood.html" class="text-teal-600 hover:text-teal-800 text-sm">Read</a>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-gray-700">Jami` at-Tirmidhi</span>
+                                <a href="tirmidhi.html" class="text-teal-600 hover:text-teal-800 text-sm">Read</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <span class="text-teal-600 font-medium">4 Books</span>
+                            <a href="hadith-books.html" class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+                                View All
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 极速 24 极速" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Islamic Sciences -->
+                <div class="resource-card bg-white rounded-xl shadow-lg overflow-hidden transition duration-300 hover:shadow-xl">
+                    <div class="h-48 bg-emerald-100 flex items-center justify-center">
+                        <img src="images/3.png" alt="Ancient Islamic manuscripts with geometric patterns" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-909 mb-2">Islamic Sciences</h3>
+                        <p class="text-gray-600 mb-4">
+                            Aqeedah, Fiqh, Seerah, Hadith and Islamic History
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-teal-600 font-medium">Coming soon</span>
+                            <button class="text-teal-600 hover:text-teal-800 font-medium flex items-center">
+                                Explore
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <h2 class="calligraphy-title text-2xl font-bold mb-4">Kitab By Hadith</h2>
+                    <p class="text-gray-300 mb-4">
+                       Hadith is a  collection of traditions and sayings of the Prophet Muhammad (peace be upon him), which, with the Qur'an, constitutes the sacred texts of Islam
+                    </p>
+                    <div class="flex space-x-4">
+                       <a href="#" class="hover:text-teal-400">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c极速-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 极速.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89极速-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@kitabyhadith?si=DbkqJae2xjrR3zJ_" class="hover:text-teal-400">
+                            <span class="sr-only">YouTube</span>
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-span-1 md:col-span-1">
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <p class="text-gray-300 mb-2">Email: <a href="mailto:kitabyhadith@gmail.com" class="hover:text-teal-400">kitabyhadith@gmail极速</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const resourceCards = document.querySelectorAll('.resource-card');
+            const noResultsMessage = document.getElementById('no-results');
+            
+            // Function to perform search
+            function performSearch() {
+                const searchTerm = searchInput.value.trim().toLowerCase();
+                let hasResults = false;
+                
+                if (searchTerm === '') {
+                    // If search is empty, show all cards
+                    resourceCards.forEach(card => {
+                        card.style.display = 'block';
+                        // Remove any previous highlights
+                        const highlights = card.querySelectorAll('.search-highlight');
+                        highlights.forEach(highlight => {
+                            const parent = highlight.parentNode;
+                            parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+                            parent.normalize();
+                        });
+                    });
+                    noResultsMessage.style.display = 'none';
+                    return;
+                }
+                
+                // Search through each resource card
+                resourceCards.forEach(card => {
+                    const cardText = card.textContent.toLowerCase();
+                    const title = card.querySelector('h3').textContent;
+                    const resources = card.querySelectorAll('.flex.justify-between.items-center');
+                    
+                    let cardHasMatch = cardText.includes(searchTerm);
+                    
+                    if (cardHasMatch) {
+                        card.style.display = 'block';
+                        hasResults = true;
+                        
+                        // Highlight matching text in the card
+                        highlightText(card, searchTerm);
+                        
+                        // Also check individual resources within the card
+                        let resourceMatchFound = false;
+                        resources.forEach(resource => {
+                            const resourceText = resource.textContent.toLowerCase();
+                            if (resourceText.includes(searchTerm)) {
+                                resource.style.backgroundColor = 'rgba(245, 158, 11, 0.1)';
+                                resourceMatchFound = true;
+                            } else {
+                                resource.style.backgroundColor = '';
+                            }
+                        });
+                        
+                        // If no specific resource matched, highlight the entire card slightly
+                        if (!resourceMatchFound) {
+                            card.style.backgroundColor = 'rgba(245, 158, 11, 0.05)';
+                        } else {
+                            card.style.backgroundColor = '';
+                        }
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show no results message if no matches found
+                if (!hasResults) {
+                    noResultsMessage.style.display = 'block';
+                } else {
+                    noResultsMessage.style.display = 'none';
+                }
+            }
+            
+            // Function to highlight matching text
+            function highlightText(element, searchTerm) {
+                const nodes = element.childNodes;
+                
+                for (let i = 0; i < nodes.length; i++) {
+                    const node = nodes[i];
+                    
+                    if (node.nodeType === 3) { // Text node
+                        const text = node.nodeValue;
+                        const searchRegex = new RegExp(searchTerm, 'gi');
+                        const newText = text.replace(searchRegex, match => {
+                            return `<span class="search-highlight">${match}</span>`;
+                        });
+                        
+                        if (newText !== text) {
+                            const newElement = document.createElement('span');
+                            newElement.innerHTML = newText;
+                            node.parentNode.replaceChild(newElement, node);
+                        }
+                    } else if (node.nodeType === 1 && node.nodeName !== 'SCRIPT') { // Element node
+                        highlightText(node, searchTerm);
+                    }
+                }
+            }
+            
+            // Event listeners
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+            
+            // Clear search when clicking on the search input
+            searchInput.addEventListener('click', function() {
+                if (this.value !== '') {
+                    this.value = '';
+                    performSearch();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
