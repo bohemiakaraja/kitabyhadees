@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quran 16 Line - KitabyHadith</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #0d9488;
+            --secondary: #00544d;
+            --accent: #f59e0b;
+            --light: #f0fdfa;
+        }
+        
+        body {
+            font-family: 'Amiri', serif;
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/aac1f8c1-f596-4fa1-9b27-3e9b9e9fa8c7.png') fixed;
+            background-size: cover;
+            background-color: rgba(240, 253, 250, 0.95);
+            background-blend-mode: lighten;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        .islamic-pattern {
+            background: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/60a75690-0f70-4596-9f51-099b40022a4a.png') center repeat;
+            background-size: 300px;
+            background-color: var(--primary);
+            background-blend-mode: overlay;
+            opacity: 0.1;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+        
+        .calligraphy-title {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        
+        .arabic-font {
+            font-family: 'Noto Naskh Arabic', serif;
+            font-size: 1.4rem;
+            line-height: 2.3;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .teacher-card:hover .teacher-img {
+            transform: scale(1.05);
+        }
+
+        /* Smooth scrolling for navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Mobile menu styles */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layer -->
+    <div class="islamic-pattern"></div>
+    
+    <!-- Navigation -->
+    <nav class="bg-white bg-opacity-90 backdrop-blur-sm shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Logo and site name -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <div class="bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12 md:w-16 md:h-16"></div>
+                        <span class="calligraphy-title ml-3 text-xl md:text-2xl text-gray-800">KitabyHadith</span>
+                    </div>
+                    
+                    <!-- Navigation links - Desktop -->
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="index.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium text-gray-500 hover:text-gray-700">Home</a>
+                        <a href="index.html#Books" class="inline-flex items-center px-1 pt-1 border-b-2 border-teal-500 text-sm font-medium text-gray-900">Books</a>
+                        <a href="index.html#about" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-gray-300 text-sm font-medium text-gray-500 hover:text-gray-700">About</a>
+                    </div>
+                </div>
+                
+                <!-- Search and Action - Desktop -->
+                <div class="hidden md:flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="relative flex items-center">
+                            <input type="text" placeholder="Search knowledge..." class="pl-3 pr-10 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent w-40 lg:w-56">
+                            <button class="absolute right-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="ml-4 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-sm font-medium transition duration-300">
+                        Sign In
+                    </button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-500 hover:text-gray-700">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu, show/hide based on menu state -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-white border-t border-gray-200">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Home</a>
+                <a href="index.html#Books" class="block px-3 py-2 rounded-md text-base font-medium text-gray-900 bg-gray-100">Books</a>
+                <a href="index.html#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">About</a>
+                
+                <div class="pt-4 pb-3 border-t border-gray-200">
+                    <div class="relative mt-3 px-3">
+                        <input type="text" placeholder="Search knowledge..." class="w-full pl-3 pr-10 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                        <button class="absolute right-5 top-2.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="mt-4 w-full bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-md text-base font-medium transition duration-300">
+                        Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-8 md:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="calligraphy-title text-2xl md:text-4xl lg:text-5xl font-bold text-gray-900 text-center mb-8 md:mb-12">
+                Quran 16 Line Two Sided
+            </h1>
+
+            <div class="space-y-4 md:space-y-6">
+                <!-- Para 1 to 30 -->
+                <!-- Loop for 30 paras -->
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 1</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/cvtxyLbI#BqHOhRzKj3AWZD3yoeu2PvaOXn-ZrCEU0OrcaWBCyzc" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 2</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/57EgkDKZ#lqWgCJZylxSArSKjrL_HsOBTI6HlwBq2SQp81YVFUfY" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 3</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/930mDaKC#YdP-XhEDqJ2RsxlNC2A7ylqWSMW7Cw4Tfe2S5iX6KPs" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 4</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/smtQBCwK#orzh_fKKT2pCsJx2GFtHSv-NjnDaNonjY5g8OVPmbF0" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 5</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/ky9kEY6R#NsKKtv8g02EvWeaIfFTQPWx618H0VAEeAx1XMOzaxC4" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 6</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/t7Fh1BJ#PZ4aNQeT8hjHcDZCEaxWEBBsdNS4y73c_LIDc0G2Ghg" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 7</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/cz02kJpD#Y1lNgdBnuFlK2o7p_s0CQIBsdyGdRP77jxbLPkF1fC8" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 8</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/UytnHKrS#FPRP90wPGZROtE83inO8auS8xoZoEp5Apr5eLO5zNDo" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 9</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/MykHzIJS#UNn84FnLPMp4V6FKWnju5F7Y0MWy8hUQyu3x61rrC10" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 10</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/grUFgIRY#gZAQYtuLDZ1ovZ8BqkPyk10CSvV5b1bomHd_XdEJAog" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 11</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/dj0wVZYI#EJvjJqvLXr36mp1EM5qGetJErUyiIqL8O0f046hSd-U" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 12</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/BvEHlJAa#YuPDBz1P5oICUAzbAFhrAhJt9_75Za-V763bEmVlXEg" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 13</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/83s3wCyb#TUxoS6Dv2YQPKtz6CKvOdDHfqT2R1SuAEcCMop8E9ew" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 14</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/1y10kJYS#hPyD5iqi-vPzmNrcalBhIFN0pjka2EzOCvIrh_GOygk" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 15</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/pr0RXabQ#2WvgGGF304uWGwqnVVVakDRuBiRKbOBVdaiJlfpVCbE" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 16</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/ZqFSFIqL#l8lZXdrKU95_64Pu9Ehy2bxdqroVfdF2T6e7oNT1ZWM" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 17</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/xv1FhZiC#lbZ4JkIHnHtM26wbO79_efnwuMO2Pl99H-nZIvlXWVI" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 18</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/Nv9yXALb#MJzHStOXWgj05345Maomsm-hcxer4MJvpy10j2Y5lGk" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 19</h2>
+                  
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/kjFF0baJ#KMTUbqBhAk6lTg-34Z1U1qpW6Os-Qs3j7HcRalbURGM" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 20</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/AnsVjIab#9kneNyKtWa4aRQZ2eW0XG0Z98lWDv31o5IHtQLxnAy8" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 21</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/Im0mVCwC#q1EUzJ_MKuN1eSW5pfTVAMViBaCqMFjWF8Z_wIHVqZo" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 22</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/o2UxBbBJ#HN_SvQ7umLz_sCAFL4pwrxE78Eg3UKl7Slp0egWNRgI" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 23</h2>
+                   
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/AqtBwCza#SLURbh8xDZq3psz8QnFG1dxoNKBNv1EY09T-6nq4DJc" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 24</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/1nkTjYSI#g8UMCFg9kBh093gJUaInGDQQaO5x9UiKrait8CcrltQ" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 25</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/Fi1TWJCK#KpTTb9X1Gq32x_tbOx127pD3JXowr6KtA17A602qkR8" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 26</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/ZqNVhYLD#lUJc8-8kj3KRoptMLGzMyDMN4Yhq9SHhf3OxBj-IBag" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 27</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/RzlV2ZBC#QFEh1uL8_ILQsFYOBXMsw6Uj4PzwhgXknjmRSM_9nCQ" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 28</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/oz1VFKaZ#i8HxFx-WKSSv-geptoTQ1JM7yGZlzuppU4Yzzb-qcE8" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 29</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/s692iSYD#o3wtfIHtWJO0Rvz6xB5GpKj9_Heauk-yYtknqAiK7Cs" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+                    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-3 md:mb-4">Para 30</h2>
+                    
+                    <div class="flex justify-end">
+                        <a href="https://mega.nz/file/1nkVFCoZ#hSjJQZFeGMRjla2DMTSOUTCPAAQ5LrieBP_9xPO0y9k" class="bg-teal-600 hover:bg-teal-700 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-md text-xs md:text-sm font-medium transition duration-300">
+                            Download PDF
+                        </a>
+                    </div>
+                </div>
+                <!-- End Loop -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-10 md:pt-16 md:pb-12 mt-12 md:mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <h2 class="calligraphy-title text-xl md:text-2xl font-bold mb-3 md:mb-4">Kitab By Hadith</h2>
+                    <p class="text-gray-300 mb-4 text-sm md:text-base">
+                       Hadith is a collection of traditions and sayings of the Prophet Muhammad (peace be upon him), which, with the Qur'an, constitutes the sacred texts of Islam
+                    </p>
+                    <div class="flex space-x-4">
+                       <a href="#" class="hover:text-teal-400">
+                            <span class="sr-only">Facebook</span>
+                            <svg class="h-5 w-5 md:h-6 md:w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://youtube.com/@kitabyhadith?si=DbkqJae2xjrR3zJ_" class="hover:text-teal-400">
+                            <span class="sr-only">YouTube</span>
+                            <svg class="h-5 w-5 md:h-6 md:w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="hover:text-teal-400">
+                            <span class="sr-only">Twitter</span>
+                            <svg class="h-5 w-5 md:h-6 md:w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm md:text-base font-semibold uppercase tracking-wider mb-3 md:mb-4">Quick Links</h3>
+                    <ul class="space-y-2 md:space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm md:text-base">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm md:text-base">About Us</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm md:text-base">Books</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-white text-sm md:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm md:text-base font-semibold uppercase tracking-wider mb-3 md:mb-4">Contact Us</h3>
+                    <ul class="space-y-2 md:space-y-3">
+                        <li class="flex items-start">
+                            <svg class="h-4 w-4 md:h-5 md:w-5 text-teal-400 mt-0.5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            <span class="text-gray-300 text-sm md:text-base">info@kitabyhadith.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-4 w-4 md:h-5 md:w-5 text-teal-400 mt-0.5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="text-gray-300 text-sm md:text-base">Islamabad, Pakistan</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-700 md:flex md:items-center md:justify-between">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-300 text-xs md:text-sm">
+                        &copy; 2023 Kitab By Hadith. All rights reserved.
+                    </p>
+                </div>
+                
+                <div class="mt-4 flex justify-center space-x-6 md:mt-0">
+                    <a href="#" class="text-gray-300 hover:text-gray-400 text-xs md:text-sm">
+                        Privacy Policy
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-gray-400 text-xs md:text-sm">
+                        Terms of Service
+                    </a>
+                    <a href="#" class="text-gray-300 hover:text-gray-400 text-xs md:text-sm">
+                        Disclaimer
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
